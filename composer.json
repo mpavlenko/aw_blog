@@ -6,7 +6,7 @@
     "description": "Blog for Magento. Shows posts with comments. Comments can be auto approved or moderated by admin. Categories. Plus much more.",
     "authors": [
     {
-        "name": "AW_Core_Team",
+        "name": "aheadworks",
         "email": "no-reply@aheadworks.com"
     }
 ],
