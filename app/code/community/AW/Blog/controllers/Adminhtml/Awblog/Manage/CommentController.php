@@ -1,6 +1,6 @@
 <?php
 
-class AW_Blog_Manage_CommentController extends Mage_Adminhtml_Controller_Action
+class AW_Blog_Adminhtml_Awblog_Manage_CommentController extends Mage_Adminhtml_Controller_Action
 {
     public function preDispatch()
     {

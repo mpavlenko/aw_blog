@@ -1,6 +1,6 @@
 <?php
 
-class AW_Blog_Manage_CatController extends Mage_Adminhtml_Controller_Action
+class AW_Blog_Adminhtml_Awblog_Manage_CatController extends Mage_Adminhtml_Controller_Action
 {
     protected function _isAllowed()
     {
