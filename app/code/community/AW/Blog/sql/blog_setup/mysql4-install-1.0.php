@@ -1,31 +1,4 @@
 <?php
-/**
-* aheadWorks Co.
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the EULA
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
- *
- * @category   AW
- * @package    AW_Blog
- * @version    1.1.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- */
-
 
 $installer = $this;
 
@@ -117,7 +90,7 @@ ALTER TABLE {$this->getTable('blog/blog')} ADD `short_content` TEXT NOT NULL;
 }
 
 $installer->run("
-CREATE TABLE {$this->getTable('blog/tag')} (
+CREATE TABLE IF NOT EXISTS {$this->getTable('blog/tag')} (
  `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
  `tag` VARCHAR( 255 ) NOT NULL ,
  `tag_count` INT( 11 ) NOT NULL DEFAULT '0',

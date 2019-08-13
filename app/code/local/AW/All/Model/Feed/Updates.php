@@ -1,41 +1,28 @@
 <?php
+
 /**
-* aheadWorks Co.
+ * aheadWorks Co.
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the EULA
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
  *
  * @category   AW
  * @package    AW_All
- * @version    2.2.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
  */
-
-class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
-{
+class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract {
 
     /**
      * Retrieve feed url
      *
      * @return string
      */
-    public function getFeedUrl()
-    {
+    public function getFeedUrl() {
         return AW_All_Helper_Config::UPDATES_FEED_URL;
     }
 
@@ -43,32 +30,31 @@ class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
      * Checks feed
      * @return
      */
-    public function check()
-    {
+    public function check() {
         if ((time() - Mage::app()->loadCache('aw_all_updates_feed_lastcheck')) > Mage::getStoreConfig('awall/feed/check_frequency')) {
             $this->refresh();
         }
     }
 
-    public function refresh()
-    {
+    public function refresh() {
         $feedData = array();
 
         try {
 
             $Node = $this->getFeedData();
-            if (!$Node) return false;
+            if (!$Node)
+                return false;
             foreach ($Node->children() as $item) {
 
                 if ($this->isInteresting($item)) {
-                    $date = strtotime((string)$item->date);
+                    $date = strtotime((string) $item->date);
                     if (!Mage::getStoreConfig('awall/install/run') || (Mage::getStoreConfig('awall/install/run') < $date)) {
                         $feedData[] = array(
                             'severity' => 3,
-                            'date_added' => $this->getDate((string)$item->date),
-                            'title' => (string)$item->title,
-                            'description' => (string)$item->content,
-                            'url' => (string)$item->url,
+                            'date_added' => $this->getDate((string) $item->date),
+                            'title' => (string) $item->title,
+                            'description' => (string) $item->content,
+                            'url' => (string) $item->url,
                         );
                     }
                 }
@@ -86,9 +72,7 @@ class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
         }
     }
 
-
-    public function getInterests()
-    {
+    public function getInterests() {
         if (!$this->getData('interests')) {
             $types = @explode(',', Mage::getStoreConfig('awall/feed/interests'));
             $this->setData('interests', $types);
@@ -100,12 +84,11 @@ class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
      *
      * @return
      */
-    public function isInteresting($item)
-    {
+    public function isInteresting($item) {
         $interests = $this->getInterests();
 
-        $types = @explode(",", (string)$item->type);
-        $exts = @explode(",", (string)$item->extensions);
+        $types = @explode(",", (string) $item->type);
+        $exts = @explode(",", (string) $item->extensions);
 
         $isInterestedInSelfUpgrades = array_search(AW_All_Model_Source_Updates_Type::TYPE_INSTALLED_UPDATE, $types);
 
@@ -125,9 +108,8 @@ class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
         return false;
     }
 
-    public function isExtensionInstalled($code)
-    {
-        $modules = array_keys((array)Mage::getConfig()->getNode('modules')->children());
+    public function isExtensionInstalled($code) {
+        $modules = array_keys((array) Mage::getConfig()->getNode('modules')->children());
 
         foreach ($modules as $moduleName) {
             if ($moduleName == $code) {

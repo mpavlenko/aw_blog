@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config>
-    <translate>
-        <modules>
-            <AW_Blog>
-                <files>
-                    <default>AW_Blog.csv</default>
-                </files>
-            </AW_Blog>
-        </modules>
-    </translate>
-
+<config>    
     <menu>
         <blog module="blog">
             <title>Blog</title>
@@ -82,12 +72,5 @@
                 </children>
             </admin>
         </resources>
-    </acl>
-    <layout>
-        <updates>
-            <blog>
-                <file>aw_blog.xml</file>
-            </blog>
-        </updates>
-    </layout>
+    </acl>   
 </config>

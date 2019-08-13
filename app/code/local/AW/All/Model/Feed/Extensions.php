@@ -1,67 +1,52 @@
 <?php
+
 /**
-* aheadWorks Co.
+ * aheadWorks Co.
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the EULA
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
  *
  * @category   AW
  * @package    AW_All
- * @version    2.2.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
  */
-
-class AW_All_Model_Feed_Extensions extends AW_All_Model_Feed_Abstract
-{
+class AW_All_Model_Feed_Extensions extends AW_All_Model_Feed_Abstract {
 
     /**
      * Retrieve feed url
      *
      * @return string
      */
-    public function getFeedUrl()
-    {
+    public function getFeedUrl() {
         return AW_All_Helper_Config::EXTENSIONS_FEED_URL;
     }
-
 
     /**
      * Checks feed
      * @return
      */
-    public function check()
-    {
+    public function check() {
         if (!(Mage::app()->loadCache('aw_all_extensions_feed')) || (time() - Mage::app()->loadCache('aw_all_extensions_feed_lastcheck')) > Mage::getStoreConfig('awall/feed/check_frequency')) {
             $this->refresh();
         }
     }
 
-    public function refresh()
-    {
+    public function refresh() {
         $exts = array();
         try {
             $Node = $this->getFeedData();
-            if (!$Node) return false;
+            if (!$Node)
+                return false;
             foreach ($Node->children() as $ext) {
-                $exts[(string)$ext->name] = array(
-                    'display_name' => (string)$ext->display_name,
-                    'version' => (string)$ext->version,
-                    'url' => (string)$ext->url
+                $exts[(string) $ext->name] = array(
+                    'display_name' => (string) $ext->display_name,
+                    'version' => (string) $ext->version,
+                    'url' => (string) $ext->url
                 );
             }
 
@@ -73,9 +58,8 @@ class AW_All_Model_Feed_Extensions extends AW_All_Model_Feed_Abstract
         }
     }
 
-    public function checkExtensions()
-    {
-        $modules = array_keys((array)Mage::getConfig()->getNode('modules')->children());
+    public function checkExtensions() {
+        $modules = array_keys((array) Mage::getConfig()->getNode('modules')->children());
         sort($modules);
 
         $magentoPlatform = AW_All_Helper_Versions::getPlatform();
@@ -96,8 +80,7 @@ class AW_All_Model_Feed_Extensions extends AW_All_Model_Feed_Abstract
         return $this;
     }
 
-    public function getExtensionPlatform($extensionName)
-    {
+    public function getExtensionPlatform($extensionName) {
         try {
             if ($platform = Mage::getConfig()->getNode("modules/$extensionName/platform")) {
                 $platform = strtolower($platform);
@@ -110,9 +93,7 @@ class AW_All_Model_Feed_Extensions extends AW_All_Model_Feed_Abstract
         }
     }
 
-
-    public function disableExtensionOutput($extensionName)
-    {
+    public function disableExtensionOutput($extensionName) {
         $coll = Mage::getModel('core/config_data')->getCollection();
         $coll->getSelect()->where("path='advanced/modules_disable_output/$extensionName'");
         $i = 0;
@@ -128,6 +109,5 @@ class AW_All_Model_Feed_Extensions extends AW_All_Model_Feed_Abstract
         }
         return $this;
     }
-
 
 }

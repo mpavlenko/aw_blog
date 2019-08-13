@@ -1,32 +1,20 @@
 <?php
+
 /**
-* aheadWorks Co.
+ * aheadWorks Co.
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the EULA
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
+ * http://ecommerce.aheadworks.com/LICENSE-L.txt
  *
  * @category   AW
  * @package    AW_Blog
- * @version    1.1.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-L.txt
  */
-
-
 class AW_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract {
 
     protected function _construct() {
@@ -135,6 +123,23 @@ class AW_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract {
 
         return parent::_afterLoad($object);
     }
+    
+    
+    public function getCategoriesForPost($posts)
+    {        
+        $select = $this->_getReadAdapter()
+                ->select()
+                ->from(array('post_category' => $this->getTable('blog/post_cat')))
+                ->joinLeft(array('category_store' => $this->getTable('blog/cat_store')), 'post_category.cat_id = category_store.cat_id', array())
+                ->joinLeft(array('category_main' => $this->getTable('blog/cat')), 'post_category.cat_id = category_main.cat_id', array('title', 'identifier', 'posts' => new Zend_Db_Expr('GROUP_CONCAT(DISTINCT post_id)')))
+                ->where('category_store.store_id = 0 OR category_store.store_id = ?', Mage::app()->getStore()->getId())
+                ->where('post_category.post_id IN(?)', $posts)
+                ->group('category_main.cat_id');
+       
+        return $this->_getReadAdapter()->fetchAll($select);
+    }
+    
+    
 
     /**
      * Retrieve select object for load object data

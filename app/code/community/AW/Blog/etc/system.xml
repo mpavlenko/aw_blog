@@ -55,11 +55,27 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </title>
+                        <keywords translate="label">
+                            <label>Meta Keywords</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </keywords>
+                        <description translate="label">
+                            <label>Meta Description</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </description>
                         <route translate="label content">
                             <label>Route to Blog</label>
                             <comment>eg. "news" will make the blog accessible from domain.com/news. Must not contain any slashes. Blank for default</comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>12</sort_order>
+                            <sort_order>4</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -121,7 +137,7 @@
                         </parse_cms>                                            
                         <perpage translate="label">
                             <label>Posts Per Page</label>
-                            <comment>The number posts displayed per page. 0 to disable pages.</comment>
+                            <comment>Comma-separated</comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
@@ -155,6 +171,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </categories_urls>
+                        <sorter translate="label">
+                            <label>Default Posts Sorting</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>blog/sorter</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sorter>
                     </fields>
                 </blog>
                 <rss translate="label">
@@ -269,6 +294,7 @@
                         <page_count>
                             <label>Comments per page</label>
                             <frontend_type>text</frontend_type>
+                            <comment>Comma-separated</comment>
                             <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

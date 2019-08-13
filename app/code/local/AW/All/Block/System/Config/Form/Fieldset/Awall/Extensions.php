@@ -1,55 +1,42 @@
 <?php
+
 /**
-* aheadWorks Co.
+ * aheadWorks Co.
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the EULA
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
  *
  * @category   AW
  * @package    AW_All
- * @version    2.2.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
  */
-
-class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adminhtml_Block_System_Config_Form_Fieldset
-{
+class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adminhtml_Block_System_Config_Form_Fieldset {
 
     protected $_dummyElement;
     protected $_fieldRenderer;
     protected $_values;
 
-    public function render(Varien_Data_Form_Element_Abstract $element)
-    {
+    public function render(Varien_Data_Form_Element_Abstract $element) {
         $html = $this->_getHeaderHtml($element);
-        /*$modules = array_keys((array)Mage::getConfig()->getNode('modules')->children());
-        sort($modules);
+        /* $modules = array_keys((array)Mage::getConfig()->getNode('modules')->children());
+          sort($modules);
 
-        foreach ($modules as $moduleName) {
-            if (strstr($moduleName,'AW_') === false) {
-                continue;
-            }
+          foreach ($modules as $moduleName) {
+          if (strstr($moduleName,'AW_') === false) {
+          continue;
+          }
 
-            if($moduleName == 'AW_Core' || $moduleName == 'AW_All'){
-                continue;
-            }
+          if($moduleName == 'AW_Core' || $moduleName == 'AW_All'){
+          continue;
+          }
 
-            $html.= $this->_getFieldHtml($element, $moduleName);
-        }*/
+          $html.= $this->_getFieldHtml($element, $moduleName);
+          } */
         $html .= $this->_getFooterHtml($element);
 
         return $html;
@@ -59,8 +46,7 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
      * @deprecated
      * @return
      */
-    protected function _getDummyElement()
-    {
+    protected function _getDummyElement() {
         if (empty($this->_dummyElement)) {
             $this->_dummyElement = new Varien_Object(array('show_in_default' => 1, 'show_in_website' => 1));
         }
@@ -71,8 +57,7 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
      * @deprecated
      * @return
      */
-    protected function _getFieldRenderer()
-    {
+    protected function _getFieldRenderer() {
         if (empty($this->_fieldRenderer)) {
             $this->_fieldRenderer = Mage::getBlockSingleton('adminhtml/system_config_form_field');
         }
@@ -86,8 +71,7 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
      * @param $moduleName
      * @return string
      */
-    protected function _getFieldHtml($fieldset, $moduleName)
-    {
+    protected function _getFieldHtml($fieldset, $moduleName) {
 
 
         $configData = $this->getConfigData();
@@ -123,7 +107,6 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
                 if ($platform == 'ce' || $platform == 'pe') {
                     $warning = $this->__("This extension can't be run under Magento Enterprise platform. You need Enterprise version of the extension.");
                 }
-
             } elseif ($magentoVersion >= $this->_convertVersion(AW_All_Helper_Config::PROFESSIONAL_EDITION)) {
                 // PE
                 if ($platform == 'ce') {
@@ -170,35 +153,30 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
 
 
         if ($ver) {
-            $field = $fieldset->addField($id, 'label',
-                                         array(
-                                              'name' => 'ssssss',
-                                              'label' => $moduleName,
-                                              'value' => $warning ? $warning : $ver,
-
-                                         ))->setRenderer($this->_getFieldRenderer());
+            $field = $fieldset->addField($id, 'label', array(
+                        'name' => 'ssssss',
+                        'label' => $moduleName,
+                        'value' => $warning ? $warning : $ver,
+                    ))->setRenderer($this->_getFieldRenderer());
             return $field->toHtml();
         }
         return '';
-
     }
-
 
     /**
      * @deprecated
      * @param $v
      * @return int
      */
-    protected function _convertVersion($v)
-    {
+    protected function _convertVersion($v) {
         $digits = @explode(".", $v);
         $version = 0;
         if (is_array($digits)) {
             foreach ($digits as $k => $v) {
                 $version += ($v * pow(10, max(0, (3 - $k))));
             }
-
         }
         return $version;
     }
+
 }

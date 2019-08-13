@@ -1,33 +1,22 @@
 <?php
+
 /**
-* aheadWorks Co.
+ * aheadWorks Co.
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the EULA
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
+ * http://ecommerce.aheadworks.com/LICENSE-L.txt
  *
  * @category   AW
  * @package    AW_Blog
- * @version    1.1.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-L.txt
  */
-
-
 class AW_Blog_Helper_Config extends Mage_Core_Helper_Abstract {
+    
     const XML_TAGCLOUD_SIZE = 'blog/menu/tagcloud_size';
     const XML_RECENT_SIZE = 'blog/menu/recent';
 
@@ -38,12 +27,6 @@ class AW_Blog_Helper_Config extends Mage_Core_Helper_Abstract {
     const XML_BLOG_USESHORTCONTENT = 'blog/blog/useshortcontent';
 
     const XML_COMMENTS_PER_PAGE = 'blog/comments/page_count';
-
-    public function getCommentsPerPage($store = null) {
-        $perPageCount = intval(Mage::getStoreConfig(self::XML_COMMENTS_PER_PAGE, $store));
-        if ($perPageCount < 1)
-            $perPageCount = 10;
-        return $perPageCount;
-    }
+ 
 
 }

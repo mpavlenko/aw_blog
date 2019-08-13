@@ -1,32 +1,20 @@
 <?php
+
 /**
-* aheadWorks Co.
+ * aheadWorks Co.
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the EULA
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
+ * http://ecommerce.aheadworks.com/LICENSE-L.txt
  *
  * @category   AW
  * @package    AW_Blog
- * @version    1.1.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-L.txt
  */
-
-
 class AW_Blog_Block_Manage_Comment_Grid extends Mage_Adminhtml_Block_Widget_Grid {
 
     public function __construct() {
@@ -63,6 +51,7 @@ class AW_Blog_Block_Manage_Comment_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'header' => Mage::helper('blog')->__('Comment'),
             'align' => 'left',
             'index' => 'comment',
+            'filter_index' => 'main_table.comment'
         ));
 
 
@@ -70,6 +59,7 @@ class AW_Blog_Block_Manage_Comment_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'header' => Mage::helper('blog')->__('Poster'),
             'width' => '150px',
             'index' => 'user',
+            'filter_index' => 'main_table.user',
         ));
 
 
@@ -77,14 +67,17 @@ class AW_Blog_Block_Manage_Comment_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'header' => Mage::helper('blog')->__('Email Address'),
             'width' => '150px',
             'index' => 'email',
+            'filter_index' => 'main_table.email',
         ));
 
         $this->addColumn('created_time', array(
             'header' => Mage::helper('blog')->__('Created'),
             'align' => 'center',
-            'width' => '120px',
-            'type' => 'date',
+            'width' => '150px',
+            'type' => 'datetime',
+            'gmtoffset' => true,
             'default' => '--',
+            'filter_index' => 'main_table.created_time',
             'index' => 'created_time',
         ));
 
@@ -94,19 +87,18 @@ class AW_Blog_Block_Manage_Comment_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'width' => '80px',
             'index' => 'status',
             'type' => 'options',
+            'filter_index' => 'main_table.status',
             'options' => array(
                 1 => 'Unapproved',
                 2 => 'Approved',
             ),
         ));
-
-
-
+ 
         $this->addColumn('title', array(
             'header' => Mage::helper('blog')->__('Post Title'),
             'align' => 'left',
             'width' => '80px',
-            'index' => 'title',
+            'index' => 'title',           
             'type' => 'text'
         ));
 
@@ -147,7 +139,8 @@ class AW_Blog_Block_Manage_Comment_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 array(
                     'caption' => Mage::helper('blog')->__('Delete'),
                     'url' => array('base' => '*/*/delete'),
-                    'field' => 'id'
+                    'field' => 'id',
+                    'confirm' => $this->__('Are you sure?')
                 )
             ),
             'filter' => false,

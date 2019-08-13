@@ -1,47 +1,32 @@
 <?php
+
 /**
-* aheadWorks Co.
+ * aheadWorks Co.
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the EULA
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
  *
  * @category   AW
  * @package    AW_All
- * @version    2.2.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
  */
-
-class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
-{
-
+class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template {
 
     protected $_platform = -1;
     protected $_extensions_cache = array();
     protected $_extensions;
-
     protected $_section = '';
     protected $_store_data = null;
 
     /**
      * Include JS in head if section is moneybookers
      */
-    protected function _prepareLayout()
-    {
+    protected function _prepareLayout() {
         $this->_section = $this->getAction()->getRequest()->getParam('section', false);
         if ($this->_section == 'awall') {
             $this->getLayout()
@@ -62,8 +47,7 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
      * Print init JS script into body
      * @return string
      */
-    protected function _toHtml()
-    {
+    protected function _toHtml() {
         if ($this->_section == 'awall' || $this->_section == 'awstore') {
             return parent::_toHtml();
         } else {
@@ -71,12 +55,11 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
         }
     }
 
-    protected function _initExtensions()
-    {
+    protected function _initExtensions() {
 
         $extensions = array();
 
-        $modules = array_keys((array)Mage::getConfig()->getNode('modules')->children());
+        $modules = array_keys((array) Mage::getConfig()->getNode('modules')->children());
         sort($modules);
 
         foreach ($modules as $moduleName) {
@@ -109,13 +92,13 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
             $upgradeAvailable = ($this->_convertVersion($feedInfo->getLatestVersion()) - $this->_convertVersion($ver)) > 0;
 
             $extensions[] = new Varien_Object(array(
-                                                   'version' => $ver,
-                                                   'name' => $moduleName,
-                                                   'is_platform_valid' => $isPlatformValid,
-                                                   'platform' => $platform,
-                                                   'feed_info' => $feedInfo,
-                                                   'upgrade_available' => $upgradeAvailable
-                                              ));
+                        'version' => $ver,
+                        'name' => $moduleName,
+                        'is_platform_valid' => $isPlatformValid,
+                        'platform' => $platform,
+                        'feed_info' => $feedInfo,
+                        'upgrade_available' => $upgradeAvailable
+                    ));
         }
         return $extensions;
     }
@@ -125,8 +108,7 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
      * @param $v
      * @return int
      */
-    protected function _convertVersion($v)
-    {
+    protected function _convertVersion($v) {
         $digits = @explode(".", $v);
         $version = 0;
         if (is_array($digits)) {
@@ -137,14 +119,12 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
         return $version;
     }
 
-
     /**
      * Get extension info from cached feed
      * @param $moduleName
      * @return bool|Varien_Object
      */
-    public function getExtensionInfo($moduleName)
-    {
+    public function getExtensionInfo($moduleName) {
         if (!sizeof($this->_extensions_cache)) {
             if ($displayNames = Mage::app()->loadCache('aw_all_extensions_feed')) {
                 $this->_extensions_cache = @unserialize($displayNames);
@@ -166,8 +146,7 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
      * @param $Extension
      * @return Varien_Object
      */
-    public function getIcon($Extension)
-    {
+    public function getIcon($Extension) {
         if ($Extension->getUpgradeAvailable()) {
             $icon = 'aw_all/images/update.gif';
             $title = "Update available";
@@ -185,8 +164,7 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
      * Fetch store data and return as Varien Object
      * @return Varien_Object
      */
-    protected function _getStoreData()
-    {
+    protected function _getStoreData() {
         if (!is_null($this->_store_data))
             return $this->_store_data;
         $storeData = array();
@@ -197,9 +175,8 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
             $storeResponse = preg_split('/^\r?$/m', $storeResponse, 2);
             $storeResponse = trim($storeResponse[1]);
             Mage::app()->saveCache($storeResponse, AW_All_Helper_Config::STORE_RESPONSE_CACHE_KEY);
-        }
-        else {
-            $storeResponse =  Mage::app()->loadCache(AW_All_Helper_Config::STORE_RESPONSE_CACHE_KEY);
+        } else {
+            $storeResponse = Mage::app()->loadCache(AW_All_Helper_Config::STORE_RESPONSE_CACHE_KEY);
             if (!$storeResponse) {
                 Mage::getSingleton('adminhtml/session')->addError($this->__('Sorry, but Extensions Store is not available now. Please try again in a few minutes.'));
             }
@@ -214,10 +191,8 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
      * Returns URL to store
      * @return Varien_Http_Adapter_Curl
      */
-    protected function _getStoreConnection()
-    {
+    protected function _getStoreConnection() {
         $params = array(
-
         );
         $url = array();
         foreach ($params as $k => $v) {
@@ -227,13 +202,12 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
 
         $curl = new Varien_Http_Adapter_Curl();
         $curl->setConfig(array(
-                              'timeout' => 5
-                         ));
+            'timeout' => 5
+        ));
         $curl->write(Zend_Http_Client::GET, $url, '1.0');
 
         return $curl;
     }
 
-
 }
- 
+

@@ -1,32 +1,20 @@
 <?php
+
 /**
-* aheadWorks Co.
+ * aheadWorks Co.
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the EULA
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * aheadWorks does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * aheadWorks does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
+ * http://ecommerce.aheadworks.com/LICENSE-L.txt
  *
  * @category   AW
  * @package    AW_Blog
- * @version    1.1.1
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-L.txt
  */
-
-
 class AW_Blog_Block_Manage_Cat_Grid extends Mage_Adminhtml_Block_Widget_Grid {
 
     public function __construct() {
@@ -36,9 +24,23 @@ class AW_Blog_Block_Manage_Cat_Grid extends Mage_Adminhtml_Block_Widget_Grid {
         $this->setDefaultDir('ASC');
         $this->setSaveParametersInSession(true);
     }
+    
+   protected function _getStoreId()
+   {
+        return $this->getRequest()->getParam('store', 0);
+   }
 
-    protected function _prepareCollection() {
+    protected function _prepareCollection()
+    {
         $collection = Mage::getModel('blog/cat')->getCollection();
+
+        $store = $this->_getStoreId();
+        if ($store) {
+            $collection->addStoreFilter($store)
+                    ->getSelect()
+                    ->group('main_table.cat_id');           
+        }
+        
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -46,8 +48,8 @@ class AW_Blog_Block_Manage_Cat_Grid extends Mage_Adminhtml_Block_Widget_Grid {
     protected function _prepareColumns() {
         $this->addColumn('cat_id', array(
             'header' => Mage::helper('blog')->__('ID'),
-            'align' => 'right',
-            'width' => '50px',
+            'align' => 'right',            
+            'width' => '50px',            
             'index' => 'cat_id',
         ));
 
@@ -79,7 +81,8 @@ class AW_Blog_Block_Manage_Cat_Grid extends Mage_Adminhtml_Block_Widget_Grid {
                 array(
                     'caption' => Mage::helper('blog')->__('Delete'),
                     'url' => array('base' => '*/*/delete'),
-                    'field' => 'id'
+                    'field' => 'id',
+                    'confirm' => $this->__('Are you sure?')
                 )
             ),
             'filter' => false,
