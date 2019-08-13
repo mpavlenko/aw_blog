@@ -10,6 +10,7 @@ class AW_Blog_Model_Url extends Mage_Core_Model_Url
             $isUseCategoryUrl = Mage::helper('blog')->isCategoryUrl();
             $category = Mage::getSingleton('blog/cat');
             $post = Mage::getSingleton('blog/post');
+            $tag = $this->getRequest()->getParam('tag', false);
             if ($isUseCategoryUrl && $category->getCatId()) {
                 $route .= '/' . AW_Blog_Helper_Data::CATEGORY_URI_PARAM . '/' . $category->getIdentifier();
             }
@@ -20,6 +21,9 @@ class AW_Blog_Model_Url extends Mage_Core_Model_Url
                 else {
                     $route .= '/' . $post->getIdentifier();
                 }
+            }
+            if ($tag) {
+                $route .= '/' . AW_Blog_Helper_Data::TAG_URI_PARAM . '/' . $tag;
             }
             $routePath = $route;
         }
