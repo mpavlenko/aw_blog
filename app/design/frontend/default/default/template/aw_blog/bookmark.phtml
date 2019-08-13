@@ -1,12 +1,45 @@
+<?php
+/**
+* aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Blog
+ * @version    1.1.1
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ */
+?>
 <?php $post = $this->getPost() ?>
 <div class="postBookmarks"><h4>Bookmark with:</h4>
-	<a href="http://digg.com/submit?phase=2&amp;url=<?php echo $post->getAddress();?>&amp;title=<?php echo $post->getTitle();?>&amp;bodytext=<?php echo $post->getTitle();?>&amp;topic=" class="bm"><img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-digg-com.gif" width="16" border="0" height="16">&nbsp;Digg.com</a>&nbsp;
-	<a href="http://www.stumbleupon.com/submit?url=<?php echo $post->getAddress();?>&amp;title=<?php echo $post->getTitle();?>&amp;newcomment=<?php echo $post->getTitle();?>" class="bm"><img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-stumbleupon-com.gif" width="16" border="0" height="16">&nbsp;Stumbleupon.com</a>&nbsp;
-	<a href="http://del.icio.us/post/?url=<?php echo $post->getAddress();?>&amp;title=<?php echo $post->getTitle();?>&amp;notes=<?php echo $post->getTitle();?>" class="bm"><img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-del-icio-us.gif" width="16" border="0" height="16">&nbsp;Del.icio.us</a>&nbsp;
-	<a href="http://www.facebook.com/sharer.php?u=<?php echo $post->getAddress();?>&amp;t=<?php echo $post->getTitle();?>" class="bm"><img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-www-facebook-com-.gif" width="16" border="0" height="16">&nbsp;Facebook</a>&nbsp;
-	<a href="http://reddit.com/submit?url=<?php echo $post->getAddress();?>&amp;title=<?php echo $post->getTitle();?>" class="bm"><img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-reddit-com.gif" width="16" border="0" height="16">&nbsp;Reddit.com</a>&nbsp;
+    <a href="http://digg.com/submit?phase=2&amp;url=<?php echo $post->getAddress(); ?>&amp;title=<?php echo $post->getTitle(); ?>&amp;bodytext=<?php echo $post->getTitle(); ?>&amp;topic=" class="bm">
+        <img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-digg-com.gif" width="16" height="16" alt = "" />&nbsp;<?php echo $this->__('Digg.com'); ?></a>&nbsp;
+    <a href="http://www.stumbleupon.com/submit?url=<?php echo $post->getAddress(); ?>&amp;title=<?php echo $post->getTitle(); ?>&amp;newcomment=<?php echo $post->getTitle(); ?>" class="bm">
+        <img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-stumbleupon-com.gif" width="16" height="16" alt = "" />&nbsp;<?php echo $this->__('Stumbleupon.com'); ?></a>&nbsp;
+    <a href="http://del.icio.us/post/?url=<?php echo $post->getAddress(); ?>&amp;title=<?php echo $post->getTitle(); ?>&amp;notes=<?php echo $post->getTitle(); ?>" class="bm">
+        <img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-del-icio-us.gif" width="16" height="16" alt = "" />&nbsp;<?php echo $this->__('Del.icio.us'); ?></a>&nbsp;
+    <a href="http://www.facebook.com/sharer.php?u=<?php echo $post->getAddress(); ?>&amp;t=<?php echo $post->getTitle(); ?>" class="bm">
+        <img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-www-facebook-com-.gif" width="16" height="16" alt = "" />&nbsp;<?php echo $this->__('Facebook'); ?></a>&nbsp;
+    <a href="http://reddit.com/submit?url=<?php echo $post->getAddress(); ?>&amp;title=<?php echo $post->getTitle(); ?>" class="bm">
+        <img src="<?php echo Mage::getDesign()->getSkinUrl('aw_blog/images/communityIcons'); ?>/http-reddit-com.gif" width="16" height="16" alt = "" />&nbsp;<?php echo $this->__('Reddit.com'); ?></a>&nbsp;
 </div>
-<?php 
+<?php  
 /*
 Below is a list of other bookmarking sites that you can use.
 

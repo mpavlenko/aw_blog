@@ -1,10 +1,37 @@
 <?php
+/**
+* aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Blog
+ * @version    1.1.1
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE-COMMUNITY.txt
+ */
+
 
 $installer = $this;
 
 $installer->startSetup();
-try{
-$installer->run("
+try {
+    $installer->run("
 
 DROP TABLE IF EXISTS {$this->getTable('blog/blog')};
 CREATE TABLE {$this->getTable('blog/blog')} (
@@ -26,7 +53,7 @@ UNIQUE KEY `identifier` ( `identifier` )
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 INSERT INTO {$this->getTable('blog/blog')} (`post_id` ,`cat_id`, `title` ,`post_content` ,`status` ,`created_time` ,`update_time` ,`identifier` ,`user` ,`update_user` ,`meta_keywords` ,`meta_description`)
-VALUES (NULL ,'0', 'Hello World', 'Welcome to Magento Blog by aheadWorks Co. This is your first post. Edit or delete it, then start blogging!', '1', NOW( ) , NOW( ) , 'Hello', 'Joe Blogs', 'Joe Blogs', 'Keywords', 'Description');
+VALUES (NULL ,'0', 'Hello World', 'Welcome to Magento Blog by aheadWorks Co. This is your first post. Edit or delete it, then start blogging!', '1', '2010-09-06 07:28:34' , NOW( ) , 'Hello', 'Joe Blogs', 'Joe Blogs', 'Keywords', 'Description');
 
 DROP TABLE IF EXISTS {$this->getTable('blog/comment')};
 CREATE TABLE {$this->getTable('blog/comment')} (
@@ -85,17 +112,19 @@ CREATE TABLE {$this->getTable('blog/post_cat')} (
 ALTER TABLE {$this->getTable('blog/blog')} ADD `tags` TEXT NOT NULL;
 ALTER TABLE {$this->getTable('blog/blog')} ADD `short_content` TEXT NOT NULL;
 ");
-}catch(Exception $e){}
+} catch (Exception $e) {
+    
+}
 
 $installer->run("
 CREATE TABLE {$this->getTable('blog/tag')} (
-	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`tag` VARCHAR( 255 ) NOT NULL ,
-	`tag_count` INT( 11 ) NOT NULL DEFAULT '0',
-	`store_id` TINYINT( 4 ) NOT NULL ,
-	INDEX ( `tag` , `tag_count` , `store_id` )
+ `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+ `tag` VARCHAR( 255 ) NOT NULL ,
+ `tag_count` INT( 11 ) NOT NULL DEFAULT '0',
+ `store_id` TINYINT( 4 ) NOT NULL ,
+  INDEX ( `tag` , `tag_count` , `store_id` )
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
-
 ");
 
-$installer->endSetup(); 
+$installer->endSetup();
+

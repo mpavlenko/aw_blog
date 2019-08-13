@@ -1,13 +1,13 @@
 {
     "name": "OpenMageModuleFostering/AW_Blog",
     "type": "magento-module",
-    "license": "Go-to-url",
+    "license": "EULA",
     "homepage": "",
-    "description": "A Blog build from scratch to work seamlessly in magento.",
+    "description": "Blog for Magento. Shows posts with comments. Comments can be auto approved or moderated by admin. Categories. Plus much more.",
     "authors": [
     {
         "name": "AW_Core_Team",
-        "email": "rabzonov@aheadworks.com"
+        "email": "no-reply@aheadworks.com"
     }
 ],
     "suggest": {
