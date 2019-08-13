@@ -65,6 +65,15 @@ class AW_Blog_Block_Product_Toolbar extends AW_Blog_Block_Product_ToolbarCommon
         $urlParams['_escape'] = true;
         $urlParams['_use_rewrite'] = true;
         $urlParams['_query'] = $params;
+        if ($this->getLimit() && !isset($params['limit'])) {
+            $urlParams['_query'][$this->getLimitVarName()] = $this->getLimit();
+        }
+        if ($this->getRequest()->getParam($this->getOrderVarName()) && !isset($params['order'])) {
+            $urlParams['_query'][$this->getOrderVarName()] = $this->getRequest()->getParam($this->getOrderVarName());
+        }
+        if ($this->getRequest()->getParam($this->getDirectionVarName()) && !isset($params['dir'])) {
+            $urlParams['_query'][$this->getDirectionVarName()] = $this->getRequest()->getParam($this->getDirectionVarName());
+        }
         return $this->getUrl('*/*/*', $urlParams);
     }
 

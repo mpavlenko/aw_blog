@@ -16,6 +16,9 @@ class AW_Blog_Block_Html_Pager extends Mage_Page_Block_Html_Pager
         if ($this->getParentBlock()->getCurrentDirection()) {
             $urlParams['_query'][$this->getParentBlock()->getDirectionVarName()] = $this->getParentBlock()->getCurrentDirection();
         }
+        if ($this->getParentBlock()->getLimit()) {
+            $urlParams['_query'][$this->getParentBlock()->getLimitVarName()] = $this->getParentBlock()->getLimit();
+        }
 
         return $this->getUrl('*/*/*', $urlParams);
     }
