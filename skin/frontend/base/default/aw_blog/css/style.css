@@ -30,6 +30,24 @@
     padding-bottom: 10px;
 }
 
+.postContent ul{
+    list-style: disc outside;
+    margin-bottom: 1.5em;
+}
+
+.postContent ul li{
+    margin-left: 2em;
+}
+
+.postContent ol{
+    list-style: decimal outside;
+    margin-bottom: 1.5em;
+}
+
+.postContent ol li{
+    margin-left: 2em;
+}
+
 .postDetails {
 
 }

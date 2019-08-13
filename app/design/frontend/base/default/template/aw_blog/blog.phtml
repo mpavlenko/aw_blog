@@ -11,7 +11,7 @@
             <h2><a href="<?php echo $post->getAddress(); ?>" ><?php echo $post->getTitle(); ?></a></h2>
             <h3><?php echo $post->getCreatedTime(); ?></h3>
         </div>
-        <div class="postContent"><?php echo $post->getPostContent(); ?></div>
+        <div class="postContent std"><?php echo $post->getPostContent(); ?></div>
 
         <?php echo $this->getBookmarkHtml($post) ?>
         <div class="tags"><?php echo $this->getTagsHtml($post) ?></div>

@@ -26,7 +26,7 @@ class AW_Blog_Model_Observer
         foreach ($collection as $item) {
             $xml = sprintf(
                 '<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%.1f</priority></url>',
-                htmlspecialchars($baseUrl . $route . '/' . $item->getIdentifier()), $date, $changefreq, $priority
+                htmlspecialchars($baseUrl . $route . '/' . $item->getIdentifier()) . '/', $date, $changefreq, $priority
             );
 
             $sitemapObject->sitemapFileAddLine($xml);

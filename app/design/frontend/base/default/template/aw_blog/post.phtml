@@ -6,7 +6,7 @@
         <h3><?php echo $post->getCreatedTime(); ?></h3>
     </div>
 
-    <div class="postContent"><?php echo $post->getPostContent(); ?></div>
+    <div class="postContent std"><?php echo $post->getPostContent(); ?></div>
     <?php echo $this->getBookmarkHtml($post) ?>
     <div class="tags"><?php echo Mage::getBlockSingleton('blog/blog')->getTagsHtml($post) ?></div>
     <div class="postDetails">
@@ -111,7 +111,7 @@
                 $privatekey = Mage::getStoreConfig('blog/recaptcha/privatekey');
                 $error = null;
 
-                echo recaptcha_get_html($publickey, $error);
+                echo recaptcha_get_html($publickey, $error, Mage::app()->getStore()->isCurrentlySecure());
                             ?></li><?php
             }
                         ?>

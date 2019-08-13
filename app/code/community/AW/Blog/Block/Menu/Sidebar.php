@@ -13,7 +13,7 @@ class AW_Blog_Block_Menu_Sidebar extends AW_Blog_Block_Abstract
         }
 
         if ($size) {
-            $collection = clone self::$_collection;
+            $collection = clone $this->_prepareCollection();
             $collection->setPageSize($size);
 
             foreach ($collection as $item) {

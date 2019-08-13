@@ -46,7 +46,7 @@ class AW_Blog_Block_Product_Toolbar extends AW_Blog_Block_Product_ToolbarCommon
             return $dir;
         }
 
-        return Mage::helper('blog')->defaultPostSort(Mage::app()->getStore()->getId());
+        return strtolower(Mage::helper('blog')->defaultPostSort(Mage::app()->getStore()->getId()));
     }
 
     public function setDefaultOrder($field)

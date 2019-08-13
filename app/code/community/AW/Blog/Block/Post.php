@@ -2,6 +2,9 @@
 
 class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
 {
+    const DEFAULT_COMMENT_SORT_ORDER = 'created_time';
+    const DEFAULT_COMMENT_SORT_DIR = 'desc';
+
     public function getPost()
     {
         if (!$this->hasData('post')) {
@@ -45,10 +48,12 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
     public function getComment()
     {
         if (!$this->hasData('commentCollection')) {
+            $sortOrder = $this->getRequest()->getParam('order', self::DEFAULT_COMMENT_SORT_ORDER);
+            $sortDirection = $this->getRequest()->getParam('dir', self::DEFAULT_COMMENT_SORT_DIR);
             $collection = Mage::getModel('blog/comment')
                 ->getCollection()
                 ->addPostFilter($this->getPost()->getPostId())
-                ->setOrder('created_time', 'desc')
+                ->setOrder($sortOrder, $sortDirection)
                 ->addApproveFilter(2)
             ;
             $collection->setPageSize((int)Mage::helper('blog')->commentsPerPage());
@@ -87,7 +92,7 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
         Mage::helper('blog/toolbar')->create(
             $this,
             array(
-                 'orders'        => array('created_time' => $this->__('Created At'), 'email' => $this->__('Added By')),
+                 'orders'        => array('created_time' => $this->__('Created At'), 'user' => $this->__('Added By')),
                  'default_order' => 'created_time',
                  'dir'           => 'desc',
                  'limits'        => self::$_helper->commentsPerPage(),

@@ -6,9 +6,11 @@ abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
 
     const LINK_TYPE_HEADER = 'top';
 
+    const DEFAULT_SORT_ORDER = 'created_time';
+
     protected static $_helper;
 
-    protected static $_collection;
+    protected $_collection;
 
     protected static $_catUriParam = AW_Blog_Helper_Data::CATEGORY_URI_PARAM;
 
@@ -20,9 +22,6 @@ abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
     {
         if (!self::$_helper) {
             self::$_helper = Mage::helper('blog');
-        }
-        if (!self::$_collection) {
-            self::$_collection = $this->_prepareCollection();
         }
     }
 
@@ -141,7 +140,7 @@ abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
             $this,
             array(
                 'orders'        => array('created_time' => $this->__('Created At'), 'user' => $this->__('Added By')),
-                'default_order' => 'created_time',
+                'default_order' => self::DEFAULT_SORT_ORDER,
                 'dir'           => 'desc',
                 'limits'        => self::$_helper->postsPerPage(),
             )
@@ -259,13 +258,14 @@ abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
     protected function _prepareCollection()
     {
         if (!$this->getData('cached_collection')) {
-
+            $sortOrder = self::DEFAULT_SORT_ORDER;
+            $sortDirection = Mage::helper('blog')->defaultPostSort(Mage::app()->getStore()->getId());
             $collection = Mage::getModel('blog/blog')->getCollection()
                 ->addPresentFilter()
                 ->addEnableFilter(AW_Blog_Model_Status::STATUS_ENABLED)
                 ->addStoreFilter()
                 ->joinComments()
-                ->setOrder('created_time', 'desc');
+                ->setOrder($sortOrder, $sortDirection);
 
             $collection->setPageSize((int)self::$_helper->postsPerPage());
 

@@ -1,6 +1,6 @@
 <?php
 
-class AW_Blog_Block_Cat extends AW_Blog_Block_Abstract
+class AW_Blog_Block_Cat extends AW_Blog_Block_Blog
 {
     public function getPosts()
     {
