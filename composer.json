@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/AW_Blog",
+    "type": "magento-module",
+    "license": "Go-to-url",
+    "homepage": "",
+    "description": "A Blog build from scratch to work seamlessly in magento.",
+    "authors": [
+    {
+        "name": "AW_Core_Team",
+        "email": "rabzonov@aheadworks.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
