@@ -48,7 +48,7 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
             $collection = Mage::getModel('blog/comment')
                 ->getCollection()
                 ->addPostFilter($this->getPost()->getPostId())
-                ->setOrder('created_time', 'DESC')
+                ->setOrder('created_time', 'desc')
                 ->addApproveFilter(2)
             ;
             $collection->setPageSize((int)Mage::helper('blog')->commentsPerPage());
@@ -116,11 +116,11 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
                 $breadcrumbs->addCrumb(
                     'cat',
                     array(
-                         'label' => $title,
-                         'title' => $this->__('Return to %s', $title),
-                         'link'  => Mage::getUrl(
-                             $helper->getRoute(), array('cat' => $this->getCategory()->getIdentifier())
-                         ),
+                        'label' => $title,
+                        'title' => $this->__('Return to %s', $title),
+                        'link'  => Mage::getUrl(
+                            $helper->getRoute() . '/cat/' . $this->getCategory()->getIdentifier()
+                        ),
                     )
                 );
             }

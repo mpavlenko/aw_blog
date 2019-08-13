@@ -7,7 +7,7 @@ class AW_Blog_Block_Manage_Blog_Grid extends Mage_Adminhtml_Block_Widget_Grid
         parent::__construct();
         $this->setId('blogGrid');
         $this->setDefaultSort('created_time');
-        $this->setDefaultDir('DESC');
+        $this->setDefaultDir('desc');
         $this->setSaveParametersInSession(true);
     }
 

@@ -58,4 +58,19 @@ class AW_Blog_Block_Product_Toolbar extends AW_Blog_Block_Product_ToolbarCommon
     {
         return $this->getRequest()->getParam($this->getLimitVarName());
     }
+
+    public function getPagerUrl($params=array())
+    {
+        $urlParams = array();
+        $urlParams['_escape'] = true;
+        $urlParams['_use_rewrite'] = true;
+        $urlParams['_query'] = $params;
+        return $this->getUrl('*/*/*', $urlParams);
+    }
+
+    protected function _getUrlModelClass()
+    {
+        return 'blog/url';
+    }
+
 }
