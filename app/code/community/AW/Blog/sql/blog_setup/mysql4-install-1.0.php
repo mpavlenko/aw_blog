@@ -6,8 +6,7 @@ $installer->startSetup();
 try {
     $installer->run("
 
-DROP TABLE IF EXISTS {$this->getTable('blog/blog')};
-CREATE TABLE {$this->getTable('blog/blog')} (
+CREATE TABLE IF NOT EXISTS {$this->getTable('blog/blog')} (
 `post_id` int( 11 ) unsigned NOT NULL AUTO_INCREMENT ,
 `cat_id` smallint( 11 ) NOT NULL default '0',
 `title` varchar( 255 ) NOT NULL default '',
@@ -28,8 +27,7 @@ UNIQUE KEY `identifier` ( `identifier` )
 INSERT INTO {$this->getTable('blog/blog')} (`post_id` ,`cat_id`, `title` ,`post_content` ,`status` ,`created_time` ,`update_time` ,`identifier` ,`user` ,`update_user` ,`meta_keywords` ,`meta_description`)
 VALUES (NULL ,'0', 'Hello World', 'Welcome to Magento Blog by aheadWorks Co. This is your first post. Edit or delete it, then start blogging!', '1', '2010-09-06 07:28:34' , NOW( ) , 'Hello', 'Joe Blogs', 'Joe Blogs', 'Keywords', 'Description');
 
-DROP TABLE IF EXISTS {$this->getTable('blog/comment')};
-CREATE TABLE {$this->getTable('blog/comment')} (
+CREATE TABLE IF NOT EXISTS {$this->getTable('blog/comment')} (
 `comment_id` int( 11 ) unsigned NOT NULL AUTO_INCREMENT ,
 `post_id` smallint( 11 ) NOT NULL default '0',
 `comment` text NOT NULL ,
@@ -43,8 +41,7 @@ PRIMARY KEY ( `comment_id` )
 INSERT INTO {$this->getTable('blog/comment')} (`comment_id` ,`post_id` ,`comment` ,`status` ,`created_time` ,`user` ,`email`)
 VALUES (NULL , '1', 'This is the first comment. It can be edited, deleted or set to unapproved so it is not displayed. This can be done in the admin panel.', '2', NOW( ) , 'Joe Blogs', 'joe@blogs.com');
 
-DROP TABLE IF EXISTS {$this->getTable('blog/cat')};
-CREATE TABLE {$this->getTable('blog/cat')} (
+CREATE TABLE IF NOT EXISTS {$this->getTable('blog/cat')} (
 `cat_id` int( 11 ) unsigned NOT NULL AUTO_INCREMENT ,
 `title` varchar( 255 ) NOT NULL default '',
 `identifier` varchar( 255 ) NOT NULL default '',
@@ -64,20 +61,17 @@ NULL , 'News', 'news'
 );
 
 
-DROP TABLE IF EXISTS {$this->getTable('blog/store')};
-CREATE TABLE {$this->getTable('blog/store')} (
+CREATE TABLE IF NOT EXISTS {$this->getTable('blog/store')} (
 `post_id` smallint(6) unsigned,
 `store_id` smallint(6) unsigned
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-DROP TABLE IF EXISTS {$this->getTable('blog/cat_store')};
-CREATE TABLE {$this->getTable('blog/cat_store')} (
+CREATE TABLE IF NOT EXISTS {$this->getTable('blog/cat_store')} (
 `cat_id` smallint(6) unsigned ,
 `store_id` smallint(6) unsigned
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-DROP TABLE IF EXISTS {$this->getTable('blog/post_cat')};
-CREATE TABLE {$this->getTable('blog/post_cat')} (
+CREATE TABLE IF NOT EXISTS {$this->getTable('blog/post_cat')} (
 `cat_id` smallint(6) unsigned ,
 `post_id` smallint(6) unsigned
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

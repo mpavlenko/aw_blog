@@ -2,7 +2,7 @@
 <config>
     <modules>
         <AW_Blog>
-            <version>1.2.1</version>
+            <version>1.2.2</version>
         </AW_Blog>
     </modules>
     <admin>
@@ -207,7 +207,7 @@
                 <class>AW_Blog_Block</class>
             </blog>
             <rss>
-                <rewrite></rewrite>
+                <rewrite/>
                 <drewrite>
                     <list>AW_Blog_Block_Rss_List</list>
                 </drewrite>
@@ -318,7 +318,7 @@
     <phpunit>
         <suite>
             <modules>
-                <AW_Blog />
+                <AW_Blog/>
             </modules>
         </suite>
     </phpunit>
