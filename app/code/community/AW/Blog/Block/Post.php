@@ -208,4 +208,11 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
         }
         return trim($name);
     }
+
+    public function getClearComment($str)
+    {
+        $str = str_replace('{{', '&#123;&#123;', $str);
+        $str = str_replace('}}', '&#125;&#125;', $str);
+        return $str;
+    }
 }
