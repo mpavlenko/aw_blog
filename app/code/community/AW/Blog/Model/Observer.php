@@ -19,7 +19,7 @@ class AW_Blog_Model_Observer
         $priority = (string)Mage::getStoreConfig('sitemap/blog/priority');
         $collection = Mage::getModel('blog/blog')->getCollection()->addStoreFilter($storeId);
         Mage::getSingleton('blog/status')->addEnabledFilterToCollection($collection);
-        $route = Mage::getStoreConfig('blog/blog/route');
+        $route = Mage::getStoreConfig('blog/blog/route',$sitemapObject->getStoreId());
         if ($route == "") {
             $route = "blog";
         }
