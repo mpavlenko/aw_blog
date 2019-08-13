@@ -1,29 +1,4 @@
 <?php
-/**
- * aheadWorks Co.
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the EULA
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This software is designed to work with Magento community edition and
- * its use on an edition other than specified is prohibited. aheadWorks does not
- * provide extension support in case of incorrect edition use.
- * =================================================================
- *
- * @category   AW
- * @package    AW_Blog
- * @version    1.3.18
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
- */
-
 
 class AW_Blog_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
 {
@@ -47,12 +22,7 @@ class AW_Blog_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
         $changefreq = (string)Mage::getStoreConfig('sitemap/category/changefreq');
         $priority = (string)Mage::getStoreConfig('sitemap/category/priority');
         $collection = Mage::getResourceModel('sitemap/catalog_category')->getCollection($storeId);
-		$categories = new Varien_Object();
-        $categories->setItems($collection);
-        Mage::dispatchEvent('sitemap_categories_generating_before', array(
-            'collection' => $categories
-        ));
-        foreach ($categories->getItems() as $item) {
+        foreach ($collection as $item) {
             $xml = sprintf(
                 '<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%.1f</priority></url>',
                 htmlspecialchars($baseUrl . $item->getUrl()), $date, $changefreq, $priority
@@ -67,12 +37,7 @@ class AW_Blog_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
         $changefreq = (string)Mage::getStoreConfig('sitemap/product/changefreq');
         $priority = (string)Mage::getStoreConfig('sitemap/product/priority');
         $collection = Mage::getResourceModel('sitemap/catalog_product')->getCollection($storeId);
-		$products = new Varien_Object();
-        $products->setItems($collection);
-        Mage::dispatchEvent('sitemap_products_generating_before', array(
-            'collection' => $products
-        ));
-        foreach ($products->getItems() as $item) {
+        foreach ($collection as $item) {
             $xml = sprintf(
                 '<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%.1f</priority></url>',
                 htmlspecialchars($baseUrl . $item->getUrl()), $date, $changefreq, $priority

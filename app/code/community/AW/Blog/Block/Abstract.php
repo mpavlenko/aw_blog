@@ -1,29 +1,4 @@
 <?php
-/**
- * aheadWorks Co.
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the EULA
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This software is designed to work with Magento community edition and
- * its use on an edition other than specified is prohibited. aheadWorks does not
- * provide extension support in case of incorrect edition use.
- * =================================================================
- *
- * @category   AW
- * @package    AW_Blog
- * @version    1.3.18
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
- */
-
 
 abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
 {
@@ -31,11 +6,9 @@ abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
 
     const LINK_TYPE_HEADER = 'top';
 
-    const DEFAULT_SORT_ORDER = 'created_time';
-
     protected static $_helper;
 
-    protected $_collection;
+    protected static $_collection;
 
     protected static $_catUriParam = AW_Blog_Helper_Data::CATEGORY_URI_PARAM;
 
@@ -47,6 +20,9 @@ abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
     {
         if (!self::$_helper) {
             self::$_helper = Mage::helper('blog');
+        }
+        if (!self::$_collection) {
+            self::$_collection = $this->_prepareCollection();
         }
     }
 
@@ -165,7 +141,7 @@ abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
             $this,
             array(
                 'orders'        => array('created_time' => $this->__('Created At'), 'user' => $this->__('Added By')),
-                'default_order' => self::DEFAULT_SORT_ORDER,
+                'default_order' => 'created_time',
                 'dir'           => 'desc',
                 'limits'        => self::$_helper->postsPerPage(),
             )
@@ -283,14 +259,13 @@ abstract class AW_Blog_Block_Abstract extends Mage_Core_Block_Template
     protected function _prepareCollection()
     {
         if (!$this->getData('cached_collection')) {
-            $sortOrder = self::DEFAULT_SORT_ORDER;
-            $sortDirection = Mage::helper('blog')->defaultPostSort(Mage::app()->getStore()->getId());
+
             $collection = Mage::getModel('blog/blog')->getCollection()
                 ->addPresentFilter()
                 ->addEnableFilter(AW_Blog_Model_Status::STATUS_ENABLED)
                 ->addStoreFilter()
                 ->joinComments()
-                ->setOrder($sortOrder, $sortDirection);
+                ->setOrder('created_time', 'desc');
 
             $collection->setPageSize((int)self::$_helper->postsPerPage());
 

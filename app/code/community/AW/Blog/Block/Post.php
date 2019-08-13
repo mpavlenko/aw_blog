@@ -1,35 +1,7 @@
 <?php
-/**
- * aheadWorks Co.
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the EULA
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://ecommerce.aheadworks.com/AW-LICENSE.txt
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This software is designed to work with Magento community edition and
- * its use on an edition other than specified is prohibited. aheadWorks does not
- * provide extension support in case of incorrect edition use.
- * =================================================================
- *
- * @category   AW
- * @package    AW_Blog
- * @version    1.3.18
- * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
- * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
- */
-
 
 class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
 {
-    const DEFAULT_COMMENT_SORT_ORDER = 'created_time';
-    const DEFAULT_COMMENT_SORT_DIR = 'desc';
-
     public function getPost()
     {
         if (!$this->hasData('post')) {
@@ -73,14 +45,12 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
     public function getComment()
     {
         if (!$this->hasData('commentCollection')) {
-            $sortOrder = $this->getRequest()->getParam('order', self::DEFAULT_COMMENT_SORT_ORDER);
-            $sortDirection = $this->getRequest()->getParam('dir', self::DEFAULT_COMMENT_SORT_DIR);
             $collection = Mage::getModel('blog/comment')
                 ->getCollection()
                 ->addPostFilter($this->getPost()->getPostId())
+                ->setOrder('created_time', 'DESC')
                 ->addApproveFilter(2)
             ;
-            $collection->setOrder($collection->getConnection()->quote($sortOrder), $sortDirection);
             $collection->setPageSize((int)Mage::helper('blog')->commentsPerPage());
             $this->setData('commentCollection', $collection);
         }
@@ -117,7 +87,7 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
         Mage::helper('blog/toolbar')->create(
             $this,
             array(
-                 'orders'        => array('created_time' => $this->__('Created At'), 'user' => $this->__('Added By')),
+                 'orders'        => array('created_time' => $this->__('Created At'), 'email' => $this->__('Added By')),
                  'default_order' => 'created_time',
                  'dir'           => 'desc',
                  'limits'        => self::$_helper->commentsPerPage(),
@@ -146,11 +116,11 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
                 $breadcrumbs->addCrumb(
                     'cat',
                     array(
-                        'label' => $title,
-                        'title' => $this->__('Return to %s', $title),
-                        'link'  => Mage::getUrl(
-                            $helper->getRoute() . '/cat/' . $this->getCategory()->getIdentifier()
-                        ),
+                         'label' => $title,
+                         'title' => $this->__('Return to %s', $title),
+                         'link'  => Mage::getUrl(
+                             $helper->getRoute(), array('cat' => $this->getCategory()->getIdentifier())
+                         ),
                     )
                 );
             }
@@ -232,12 +202,5 @@ class AW_Blog_Block_Post extends AW_Blog_Block_Abstract
             $name = $customer->getName();
         }
         return trim($name);
-    }
-
-    public function getClearComment($str)
-    {
-        $str = str_replace('{{', '&#123;&#123;', $str);
-        $str = str_replace('}}', '&#125;&#125;', $str);
-        return $str;
     }
 }
