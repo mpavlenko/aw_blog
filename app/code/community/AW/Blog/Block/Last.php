@@ -19,8 +19,8 @@ class AW_Blog_Block_Last extends AW_Blog_Block_Menu_Sidebar implements Mage_Widg
             ->setOrder('created_time', 'desc')
         ;
 
-        if ($this->getBlogCount()) {
-            $collection->setPageSize($this->getBlogCount());
+        if ($this->getBlocksCount()) {
+            $collection->setPageSize($this->getBlocksCount());
         } else {
             $collection->setPageSize(Mage::helper('blog')->getRecentPage());
         }

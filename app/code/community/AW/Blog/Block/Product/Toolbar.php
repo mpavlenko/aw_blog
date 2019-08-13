@@ -46,7 +46,7 @@ class AW_Blog_Block_Product_Toolbar extends AW_Blog_Block_Product_ToolbarCommon
             return $dir;
         }
 
-        return Mage::helper('blog')->defaultPostSort(Mage::app()->getStore()->getId());
+        return strtolower(Mage::helper('blog')->defaultPostSort(Mage::app()->getStore()->getId()));
     }
 
     public function setDefaultOrder($field)
@@ -58,4 +58,28 @@ class AW_Blog_Block_Product_Toolbar extends AW_Blog_Block_Product_ToolbarCommon
     {
         return $this->getRequest()->getParam($this->getLimitVarName());
     }
+
+    public function getPagerUrl($params=array())
+    {
+        $urlParams = array();
+        $urlParams['_escape'] = true;
+        $urlParams['_use_rewrite'] = true;
+        $urlParams['_query'] = $params;
+        if ($this->getLimit() && !isset($params['limit'])) {
+            $urlParams['_query'][$this->getLimitVarName()] = $this->getLimit();
+        }
+        if ($this->getRequest()->getParam($this->getOrderVarName()) && !isset($params['order'])) {
+            $urlParams['_query'][$this->getOrderVarName()] = $this->getRequest()->getParam($this->getOrderVarName());
+        }
+        if ($this->getRequest()->getParam($this->getDirectionVarName()) && !isset($params['dir'])) {
+            $urlParams['_query'][$this->getDirectionVarName()] = $this->getRequest()->getParam($this->getDirectionVarName());
+        }
+        return $this->getUrl('*/*/*', $urlParams);
+    }
+
+    protected function _getUrlModelClass()
+    {
+        return 'blog/url';
+    }
+
 }
