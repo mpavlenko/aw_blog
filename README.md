@@ -1,3 +1,5 @@
+
+
 ## Original Package Description
 
 Blog for Magento. Shows posts with comments. Comments can be auto approved or moderated by admin. Categories. Plus much more.
